@@ -1,0 +1,68 @@
+﻿@model List<RestCountryPortal.Models.CountryDataModel>
+@{
+    ViewData["Title"] = "Search Page";
+    var results = ViewBag.Result as List<RestCountryPortal.Models.CountryDataModel>;
+}
+<script type="text/javascript">
+    function SearchDetail(content) {
+        console.log(content);
+        alert(content);
+    }
+</script>
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <form method="post" action="@Url.Action("Index", "Search")">
+        <input type="text" name="NationName" id="NationName" />
+        <select id="Limit" name="Limit">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+            <option value="25">25</option>
+        </select>
+        <select id="SortDir" name="SortDir">
+            <option value="ASC">ASC</option>
+            <option value="DESC">DESC</option>
+        </select>
+        <button type="submit">查詢</button>
+        <br /><br />
+        <div>
+            @if (results == null)
+            {
+
+            }
+            else if (results.Count == 0)
+            {
+                <div>無資料</div>
+            }
+            else
+            {
+                <table border="1">
+                    <tr>
+                        <th>Flag</th>
+                        <th>Name</th>
+                        <th>Alpha2Code</th>
+                        <th>Alpha3Code</th>
+                        <th>NativeName</th>
+                        <th>AltSpellings</th>
+                        <th>CallingCodes</th>
+                        <th></th>
+                    </tr>
+                        @foreach (var item in results)
+                        {
+                            <tr>
+                                <td><img src="@Html.DisplayFor(modelItem => item.flag)" width="200" height="100" /></td>
+                                <td>@Html.DisplayFor(modelItem => item.name)</td>
+                                <td>@Html.DisplayFor(modelItem => item.alpha2Code)</td>
+                                <td>@Html.DisplayFor(modelItem => item.alpha3Code)</td>
+                                <td>@Html.DisplayFor(modelItem => item.nativeName)</td>
+                                <td>@Html.DisplayFor(modelItem => item.altSpellingsCombination)</td>
+                                <td>@Html.DisplayFor(modelItem => item.callingCodesCombination)</td>
+                                <td><button type="button" onclick="SearchDetail(@Html.DisplayFor(modelItem => item.alertContent))" style="width:50px;">詳細</button></td>
+                            </tr>
+                        }
+                </table>
+            }
+        </div>
+    </form>
+</div>

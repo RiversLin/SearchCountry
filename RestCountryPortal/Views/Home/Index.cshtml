@@ -1,0 +1,56 @@
+﻿@model RestCountryPortal.Models.CountryDataModel
+@{
+    ViewData["Title"] = "Home Page";
+    var results = ViewBag.Result as List<RestCountryPortal.Models.CountryDataModel>;
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <!-- <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p> -->
+    <form method="post" action="@Url.Action("Index", "Search")">
+        <input type="text" name="NationName" id="NationName" />
+        <select id="Limit" name="Limit">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+            <option value="25">25</option>
+        </select>
+        <select id="SortDir" name="SortDir">
+            <option value="ASC">ASC</option>
+            <option value="DESC">DESC</option>
+        </select>
+        <button type="submit">查詢</button>
+        <br /><br />
+        <div>
+            @if (results == null)
+            {
+
+            }
+            else if (results.Count == 0)
+            {
+                <div>無資料</div>
+            }
+            else
+            {
+                <table border="1">
+                    <tr>
+                        @foreach (var item in results)
+                        {
+                            <td><img src="@Html.DisplayFor(modelItem => item.flag)" /></td>
+                            <td>@Html.DisplayFor(modelItem => item.name)</td>
+                            <td>@Html.DisplayFor(modelItem => item.alpha2Code)</td>
+                            <td>@Html.DisplayFor(modelItem => item.alpha3Code)</td>
+                            <td>@Html.DisplayFor(modelItem => item.nativeName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.altSpellings)</td>
+                            <td>@Html.DisplayFor(modelItem => item.callingCodes)</td>
+                        }
+
+                    </tr>
+                </table>
+            }
+        </div>
+    </form>
+
+    
+</div>
